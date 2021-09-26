@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
 import { isAuthenticated } from "./services/auth";
@@ -25,7 +26,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
 const Routes: React.FC = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={() => <h1>Login</h1>} />
+      <Route exact path="/" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <PrivateRoute path="/app" component={() => <h1>App</h1>} />
       <Route path="*" component={() => <h1>Pagina não encontrada.</h1>} />
