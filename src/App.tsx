@@ -1,7 +1,13 @@
 import React from "react";
 
-const App: React.FC = () => {
-  return <div className="App">Hello word</div>;
-};
+import Routes from "./routes";
+import { GlobalStyle } from "./styles/global";
+
+const App: React.FC = () => (
+  <>
+    <Routes />
+    <GlobalStyle />
+  </>
+);
 
 export default App;
