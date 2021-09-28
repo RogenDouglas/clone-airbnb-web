@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
@@ -28,7 +29,7 @@ const Routes: React.FC = () => (
     <Switch>
       <Route exact path="/" component={SignIn} />
       <Route path="/signup" component={SignUp} />
-      <PrivateRoute path="/app" component={() => <h1>App</h1>} />
+      <PrivateRoute path="/home" component={Home} />
       <Route path="*" component={() => <h1>Pagina não encontrada.</h1>} />
     </Switch>
   </BrowserRouter>
