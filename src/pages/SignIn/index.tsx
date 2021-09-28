@@ -28,7 +28,7 @@ const SignIn: React.FC = () => {
         const { data } = await api.post("/sessions", { email, password });
         setToken(data.token);
 
-        history.push("/app");
+        history.push("/home");
       } catch (error) {
         setError("Usuário não encontrado.");
       }
