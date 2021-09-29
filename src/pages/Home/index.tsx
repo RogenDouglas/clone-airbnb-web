@@ -4,12 +4,12 @@ import "leaflet/dist/leaflet.css";
 
 import { MapContainer, TileLayer } from "react-leaflet";
 
-import { Container, ButtonContainer } from "./styles";
+import { Container, ButtonContainer, PointReference } from "./styles";
 import Properties, { IProperty } from "./components/Properties";
 import api from "../../services/api";
 
 import { removeToken } from "../../services/auth";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { Button } from "./components/Button/styles";
 
 type ViewPort = {
@@ -27,7 +27,10 @@ const Home: React.FC = () => {
 
   const [properties, setProperties] = useState<IProperty[]>([]);
 
+  const [addActive, setAddActive] = useState(false);
+
   const history = useHistory();
+  const location = useLocation();
 
   const loadProperties = useCallback(async () => {
     const { latitude, longitude } = viewPort;
@@ -48,6 +51,16 @@ const Home: React.FC = () => {
     history.push("/");
   };
 
+  const handleAddProprety = useCallback(() => {
+    const { latitude, longitude } = viewPort;
+
+    history.push(
+      `${location.pathname}/properties/add?latitude=${latitude}&longitude=${longitude}`
+    );
+
+    setAddActive(false);
+  }, [viewPort, history, location]);
+
   useEffect(() => {
     loadProperties();
   }, [loadProperties]);
@@ -64,13 +77,33 @@ const Home: React.FC = () => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Properties properties={properties} />
+        {!addActive && <Properties properties={properties} />}
       </MapContainer>
       <ButtonContainer>
+        <Button color="#fc6963" onClick={() => setAddActive(true)}>
+          <i className="fa fa-plus" />
+        </Button>
         <Button color="#222" onClick={handleLogout}>
           <i className="fa fa-times" />
         </Button>
       </ButtonContainer>
+      {addActive && (
+        <PointReference>
+          <i className="fa fa-map-marker" />
+          <div>
+            <button onClick={() => handleAddProprety} type="button">
+              Adicionar
+            </button>
+            <button
+              onClick={() => setAddActive(false)}
+              type="button"
+              className="cancel"
+            >
+              Cancelar
+            </button>
+          </div>
+        </PointReference>
+      )}
     </Container>
   );
 };
