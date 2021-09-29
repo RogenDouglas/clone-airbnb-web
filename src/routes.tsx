@@ -1,5 +1,9 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
+import { ModalContainer } from "react-router-modal";
+import "react-router-modal/css/react-router-modal.css";
+
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -26,12 +30,15 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
 
 const Routes: React.FC = () => (
   <BrowserRouter>
-    <Switch>
-      <Route exact path="/" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
-      <PrivateRoute path="/home" component={Home} />
-      <Route path="*" component={() => <h1>Pagina não encontrada.</h1>} />
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path="/" component={SignIn} />
+        <Route path="/signup" component={SignUp} />
+        <PrivateRoute path="/home" component={Home} />
+        <Route path="*" component={() => <h1>Pagina não encontrada.</h1>} />
+      </Switch>
+      <ModalContainer />
+    </>
   </BrowserRouter>
 );
 
